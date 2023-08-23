@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AuthModule } from '@auth0/auth0-angular';
 import { MyAuthGuard } from './security/my-auth-guard.guard';
 import { FormsModule } from '@angular/forms';
+import { QRCodeModule } from 'angularx-qrcode';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +29,7 @@ import { PaymentsComponent } from './components/payments/payments.component';
 import { WarningComponent } from './components/warning/warning.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { ToastComponent } from './components/toast/toast.component';
+import Encrypter from './utils/encrypter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +49,7 @@ import { ToastComponent } from './components/toast/toast.component';
     PaymentsComponent,
     WarningComponent,
     CallbackComponent,
-    ToastComponent
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { ToastComponent } from './components/toast/toast.component';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
+    QRCodeModule,
     AuthModule.forRoot({
       domain: "smart-city-waste-management.eu.auth0.com",
       clientId: "LAHwz0bzECZDGI2bAzfzxgrK0LGen4AN",
@@ -64,7 +68,8 @@ import { ToastComponent } from './components/toast/toast.component';
   ],
   providers: [
     MyAuthGuard,
-    UserService
+    UserService,
+    Encrypter
   ],
   bootstrap: [AppComponent]
 })
