@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
-import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
+import Encrypter from 'src/app/utils/encrypter';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,9 @@ import { ToastService } from 'src/app/services/toast.service';
 export class ProfileComponent implements OnInit, OnDestroy {
   show = false;
   userID: string = "";
+  encryptedID: string = "";
+  qrCodeDownloadLink: SafeUrl = "";
+  
   user: User = {
     id: "",
     name: "",
@@ -23,7 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   };
   isEditMode: any;
 
-  constructor(public authService: AuthService, private userService: UserService, private toastService: ToastService) { }
+  constructor(private encrypter: Encrypter, public authService: AuthService, private userService: UserService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.getUserID();
@@ -39,6 +43,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         if (subParts.length === 2 && subParts[0] === 'auth0') {
           this.userID = subParts[1];
+          this.encryptedID = this.encrypter.encrypt(this.userID);
           this.loadUser();
         } else {
           console.error("Invalid sub field format");
@@ -77,6 +82,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.error("Error updating user: ", error);
       }
     );
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
   }
 
   ngOnDestroy(): void {
