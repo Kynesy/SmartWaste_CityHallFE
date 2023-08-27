@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   };
   isEditMode: any;
 
-  constructor(private encrypter: Encrypter, public authService: AuthService, private userService: UserService, private toastService: ToastService) { }
+  constructor(public encrypter: Encrypter, public authService: AuthService, private userService: UserService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.getUserID();

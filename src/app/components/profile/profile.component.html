@@ -62,7 +62,7 @@
             <div class="card-body">
               <h5 class="card-title text-center">Your ID is:</h5>
               <p class="card-text text-center">
-                {{ encryptedID }}          
+                {{ encryptedID}}          
                 <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="userID" [allowEmptyString]="true" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
               </p>
               <p class="card-text text-center">          
