@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     bdate: ""
   };
   isEditMode: any;
+  selectedDate: any;
 
   constructor(public encrypter: Encrypter, public authService: AuthService, private userService: UserService, private toastService: ToastService) { }
 
@@ -68,6 +69,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   updateUser() {
     this.user.id = this.userID;
+    this.updateSelectedDate();
     this.userService.updateUser(this.user).subscribe(
       (response) => {
         this.loadUser(); // Reload the user data after update
@@ -91,5 +93,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
 		this.toastService.clear();
 	}
+
+  updateSelectedDate(): void {
+    if (this.selectedDate) {
+      const selectedDateStr = `${this.selectedDate.year}-${this.selectedDate.month}-${this.selectedDate.day}`;
+      this.user.bdate = selectedDateStr;
+    }
+  }
 
 }
