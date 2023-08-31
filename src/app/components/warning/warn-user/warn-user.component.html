@@ -1,0 +1,31 @@
+<div class="container-fluid pt-4 px-4">
+    <!-- Virtual Scroll for statList -->
+    <div class="card text-center rounded d-flex justify-content-between p-4">
+        <div *ngIf="warningList" class="row">
+            <cdk-virtual-scroll-viewport [itemSize]="20">
+                <table class="table text-center align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Warning ID</th>
+                            <th scope="col">Message</th>
+                            <th scope="col"></th>                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *cdkVirtualFor="let warn of warningList" class="text-dark">
+                            <td>{{ warn.id }}</td>
+                            <td>{{ warn.message }}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)="delete(warn.id)" type="button">Delete!</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </cdk-virtual-scroll-viewport>
+        </div>
+
+        <div *ngIf="!warningList" class="row">
+            <p>Good Job. No warnings to show.</p>
+        </div>
+    </div>
+</div>
