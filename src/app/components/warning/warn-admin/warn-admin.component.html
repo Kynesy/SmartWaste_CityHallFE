@@ -1,0 +1,40 @@
+<div class="container-fluid pt-4 px-4">
+    <!-- Virtual Scroll for statList -->
+    <div class="card text-center rounded d-flex justify-content-between p-4">
+        <div class="row">
+            <cdk-virtual-scroll-viewport [itemSize]="20">
+                <table class="table text-center align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">User ID</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Sorted Waste</th>
+                            <th scope="col">Unsorted Waste</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *cdkVirtualFor="let stat of statList" class="text-dark">
+                            <td>{{ stat.userId }}</td>
+                            <td>{{ stat.year }}</td>
+                            <td>{{ stat.totalSortedWaste }}</td>
+                            <td>{{ stat.totalUnsortedWaste }}</td>
+                            <td>
+                                <div *ngIf="stat.totalSortedWaste <= stat.totalUnsortedWaste" class="text-danger">
+                                    Bad Recycler
+                                </div>
+                                <div *ngIf="stat.totalSortedWaste > stat.totalUnsortedWaste" class="text-success">
+                                    Good Recycler
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" (click)="sensibilize(stat.userId)" type="button">Sensibilize!</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </div>
+</div>
