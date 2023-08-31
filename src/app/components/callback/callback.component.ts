@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { User } from 'src/app/models/user';
+import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CallbackComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService) { }
+  constructor(private router: Router, private authService: AuthService, private userService: UserService, private storageService: StorageService) { }
   user: User = {
     id: '',
     name: '',
@@ -23,14 +24,23 @@ export class CallbackComponent implements OnInit {
   userExists: boolean = false; // Initialize user existence as false
 
   ngOnInit(): void {
-
+    this.storageService.clearData();
+    this.authService.idTokenClaims$.subscribe(
+      (token) => {
+        if(token && token['__raw']){
+          this.storageService.saveData("token", token['__raw']);
+        }
+      },
+      (error) => {
+        console.error("TOKEN NOT SAVED IN STORAGE SESSION: ", error);
+      }
+    )
     //ottieni l'access token
     this.authService.user$.subscribe(
       (profile) => {
         this.profileJson = JSON.stringify(profile, null, 2);
+        console.log(this.profileJson);
         this.createUserData(); //riempi la classe user
-
-        // Check if the user exists
         this.userExist();
       },
       (error) => {
