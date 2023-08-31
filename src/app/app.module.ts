@@ -4,6 +4,8 @@ import { AuthModule } from '@auth0/auth0-angular';
 import { MyAuthGuard } from './security/my-auth-guard.guard';
 import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgChartsModule } from 'ng2-charts';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,10 +28,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { PaymentsComponent } from './components/payments/payments.component';
-import { WarningComponent } from './components/warning/warning.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { ToastComponent } from './components/toast/toast.component';
 import Encrypter from './utils/encrypter';
+import { ChartComponent } from './components/chart/chart.component';
+import { WarnMainComponent } from './components/warning/warn-main/warn-main.component';
+import { WarnUserComponent } from './components/warning/warn-user/warn-user.component';
+import { WarnAdminComponent } from './components/warning/warn-admin/warn-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,17 +52,22 @@ import Encrypter from './utils/encrypter';
     LoadingComponent,
     ContactsComponent,
     PaymentsComponent,
-    WarningComponent,
     CallbackComponent,
     ToastComponent,
+    ChartComponent,
+    WarnMainComponent,
+    WarnUserComponent,
+    WarnAdminComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     NgbModule,
+    NgChartsModule,
     HttpClientModule,
     QRCodeModule,
+    ScrollingModule,
     AuthModule.forRoot({
       domain: "smart-city-waste-management.eu.auth0.com",
       clientId: "LAHwz0bzECZDGI2bAzfzxgrK0LGen4AN",
