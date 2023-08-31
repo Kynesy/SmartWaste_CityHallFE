@@ -11,8 +11,8 @@ import { NotAuthorizedComponent } from './components/auth/not-authorized/not-aut
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { PaymentsComponent } from './components/payments/payments.component';
-import { WarningComponent } from './components/warning/warning.component';
 import { CallbackComponent } from './components/callback/callback.component';
+import { WarnMainComponent } from './components/warning/warn-main/warn-main.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,10 +23,12 @@ const routes: Routes = [
   {path: 'admin/dashboard', component: DashboardComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'ADMIN' }},
   {path: 'admin/tax', component: TaxComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'ADMIN' }},
   {path: 'admin/payments', component: PaymentsComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'ADMIN' }},
-  {path: 'admin/warning', component: WarningComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'ADMIN' }},
+  {path: 'admin/warning', component: WarnMainComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'ADMIN' }},
 
   {path: 'user/dashboard', component: DashboardComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'USER' }},
   {path: 'user/payments', component: PaymentsComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'USER' }},
+  {path: 'user/warning', component: WarnMainComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'USER' }},
+
 
   {path: 'unauthorized', component: NotAuthorizedComponent},
   {path: 'callback', component: CallbackComponent, canActivate: [AuthGuard]},
