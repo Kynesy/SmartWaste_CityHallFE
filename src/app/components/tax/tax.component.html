@@ -1,5 +1,46 @@
 <div class="container-fluid pt-4 px-4">
     <h1 class="text-neutral" style="font-weight: bold;">Tax Issuing</h1>
     <p class="text-base">Issue taxes for your citizens</p>
+
+    <div class="row mb-2">
+        <div class="col">
+            <button class="btn btn-primary" (click)="calculateFees()">Calculate Fees</button>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="card p-4">
+            <h4 class="card-title">Last Issued Taxes</h4>
+
+            <div *ngIf="!this.lastIssuedTaxes">
+                No new taxes issued. Please calculate them.
+            </div>
+
+            <div *ngIf="this.lastIssuedTaxes">
+                <cdk-virtual-scroll-viewport [itemSize]="20" class="virtual-scroll-viewport">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Timestamp</th>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Paid</th>
+                                <th scope="col">Sorted Tax</th>
+                                <th scope="col">Unsorted Tax</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *cdkVirtualFor="let fee of lastIssuedTaxes">
+                                <td>{{ fee.timestamp | date:'yyyy-MM-dd' }}</td>
+                                <td>{{ fee.userId }}</td>
+                                <td>{{ fee.paid ? 'Yes' : 'No' }}</td>
+                                <td>{{ fee.sortedTax }}</td>
+                                <td>{{ fee.unsortedTax }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </cdk-virtual-scroll-viewport>
+            </div>
+
+        </div>
+    </div>
 </div>
-  
