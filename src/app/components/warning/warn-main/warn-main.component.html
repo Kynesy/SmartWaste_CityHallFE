@@ -1,0 +1,14 @@
+<div class="container-fluid pt-4 px-4">
+    <h1 class="text-neutral" style="font-weight: bold;">Warning</h1>
+        <p *ngIf="this.userRole == 'ADMIN'" class="text-base">Send warning to sensibilize citizen</p>
+        <p *ngIf="this.userRole == 'USER'"class="text-base">Your warning list</p>
+
+    <div *ngIf="this.userRole == 'ADMIN'">
+        <app-warn-admin></app-warn-admin>
+    </div>
+
+    <div *ngIf="this.userRole == 'USER'">
+        <app-warn-user></app-warn-user>
+    </div>
+</div>
+
