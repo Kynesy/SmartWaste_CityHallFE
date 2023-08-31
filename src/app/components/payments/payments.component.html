@@ -1,5 +1,53 @@
 <div class="container-fluid pt-4 px-4">
-    <h1 class="text-neutral" style="font-weight: bold;">Payments</h1>
-    <p class="text-base">Your role is {{userRole}}</p>
-</div>
+    <div>
+      <h1 style="font-weight: bold;">Payments</h1>
+      <p>Here you can view all the issued taxes.</p>
+    </div>
+  
+    <!-- Tax table START -->
+    <div class="card text-center rounded d-flex justify-content-between p-4">
+      <div class="row">
+        <div  *ngIf="feeList.length == 0">
+          No payments to display. Please issue some and come back here.
+        </div>
+
+        <cdk-virtual-scroll-viewport [itemSize]="20" *ngIf="feeList.length != 0">
+          <table class="table text-center align-middle table-bordered table-hover mb-0">
+            <thead>
+              <tr class="text-dark">
+                <th *ngIf="this.userRole == 'ADMIN'" scope="col">User ID</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Sorted Waste</th>
+                <th scope="col">Unsorted Waste</th>
+                <th scope="col">Sorted Tax</th>
+                <th scope="col">Unsorted Tax</th>
+                <th *ngIf="this.userRole == 'USER'" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *cdkVirtualFor="let fee of feeList" class="text-dark">
+                <td *ngIf="this.userRole == 'ADMIN'">{{ fee.userId }}</td>
+                <td>{{fee.timestamp }}</td>
+                <td><div [ngClass]="{
+                  'text-danger': fee.paid === 0,
+                  'text-success': fee.paid === 1
+                  }">
+                  {{ fee.paid ? 'Yes' : 'No' }}
+                </div></td>
+                <td>{{ fee.sortedWaste }} kG</td>
+                <td>{{ fee.unsortedWaste }} kG</td>
+                <td>{{ fee.sortedTax }} Euro</td>
+                <td>{{ fee.unsortedTax }} Euro</td>
+                <td *ngIf="this.userRole == 'USER'">
+                  <button class="btn btn-primary" [disabled]="fee.paid" (click)="payTax(fee.id)">Pay It</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </cdk-virtual-scroll-viewport>
+      </div>
+    </div>
+    <!-- Tax table END -->
+  </div>
   
