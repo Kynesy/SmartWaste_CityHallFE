@@ -12,7 +12,7 @@ import { FeeStatistics } from '../models/fee-statistics';
 export class StatisticsService {
   authToken: string | null = null
   trashUrl: string = "http://localhost:8081/api/trash";
-  feeUrl: string = "http://localhost:8082/api/fee";
+  feeUrl: string = "http://localhost:8082/api/stats";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }
@@ -49,7 +49,7 @@ export class StatisticsService {
   }
 
   getSumAllofAllFeesByPayment(year: number, paid: number): Observable<FeeStatistics>{
-    const allTaxesURL = this.feeUrl + '/statistics/paid/'+ year + '/' + paid;
+    const allTaxesURL = this.feeUrl + '/all/'+ year + '/' + paid;
 
     this.authToken = this.storageService.getData("token");
     if (this.authToken) {
@@ -60,7 +60,7 @@ export class StatisticsService {
   }
 
   getSumAllofAllUserFeesByPayment(userId: string, year: number, paid: number): Observable<FeeStatistics>{
-    const allUserTaxesURL = this.feeUrl + '/statistics/user/paid/'+ userId + '/' + year + '/' + paid;
+    const allUserTaxesURL = this.feeUrl + '/user/'+ userId + '/' + year + '/' + paid;
 
     this.authToken = this.storageService.getData("token");
     if (this.authToken) {

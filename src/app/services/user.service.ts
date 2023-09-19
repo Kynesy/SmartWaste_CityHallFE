@@ -4,7 +4,6 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Observable, catchError, map, of } from 'rxjs';
 import { User } from '../models/user';
 import { StorageService } from './storage.service';
-import { Warning } from '../models/warning';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +62,8 @@ export class UserService {
 
   deleteUser(userID: string): Observable<any>{
     const deleteUrl = this.userURL + 'delete/' + userID;
+    this.authToken = this.storageService.getData("token");
+
 
     if (this.authToken) {
       this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.authToken);
@@ -88,7 +89,7 @@ export class UserService {
   }
 
   getAllId(): Observable<string[]>{
-    const getAllIdURL = this.userURL + 'get/id/all';
+    const getAllIdURL = this.userURL + 'id/all';
     this.authToken = this.storageService.getData("token");
 
     if (this.authToken) {
@@ -102,7 +103,5 @@ export class UserService {
       })
     );  
   }
-
-
 
 }

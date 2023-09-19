@@ -72,7 +72,7 @@ export class CallbackComponent implements OnInit {
   
 
   userExist(): void {
-    this.userService.existUser(this.user.email).subscribe(
+    this.userService.existUser(this.user.id).subscribe(
       (exists) => {
         this.userExists = exists;
         if (!exists) {

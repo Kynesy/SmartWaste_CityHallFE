@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { Fee } from 'src/app/models/fee';
 import { TaxService } from 'src/app/services/tax.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-payments',
@@ -15,7 +16,7 @@ export class PaymentsComponent implements OnInit {
   userRole: string | undefined;
   userId: string | void | undefined;
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private taxService: TaxService) {}
+  constructor(private authService: AuthService, private route: ActivatedRoute, private taxService: TaxService, private toastService: ToastService) {}
 
   async ngOnInit(): Promise<void> {
 
@@ -84,6 +85,7 @@ export class PaymentsComponent implements OnInit {
     this.taxService.payTax(taxId).subscribe(
       (response) => {
         console.log(response);
+        this.toastService.showSuccessToast('Tax paid with success.');
         this.feeList = [];
         this.ngOnInit();
       }
