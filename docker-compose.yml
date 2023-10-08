@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  # Angular app service
+  angular-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: city-hall-fe # Replace with the Docker image name you used earlier
+    container_name: city-hall-fe # Replace with a suitable container name
+    ports:
+      - "4200:80" # Map port 4200 of the host to port 4200 of the container
+    networks:
+      - city-hall-fe
+
+networks:
+  city-hall-fe:
+    driver: bridge
