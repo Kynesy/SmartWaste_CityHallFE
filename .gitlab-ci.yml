@@ -16,5 +16,7 @@ deploy_procedure:
     - chmod 400 $SSH_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
-        docker ps -aq | xargs docker stop | xargs docker rm &&
-        docker compose up"
+        docker stop city-hall-fe &&
+        docker rm city-hall-fe &&
+        cd /home/ubuntu/CityHallFE/ &&
+        docker compose up -d "
