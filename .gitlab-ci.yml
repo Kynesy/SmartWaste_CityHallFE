@@ -9,6 +9,12 @@ build_procedure:
     - docker:20.10.16-dind
   script:
     - docker compose build
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+
 
 deploy_procedure:
   stage: deploy
@@ -16,9 +22,5 @@ deploy_procedure:
     - chmod 400 $SSH_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
-        sudo rm -fr /home/ubuntu/cityhallfe/
-        git clone https://gitlab.com/pas_smartcitywastemanagement/cityhallfe.git /home/ubuntu/cityhallfe/ &&
-        sudo docker stop city-hall-fe &&
-        sudo docker rm city-hall-fe &&
-        cd /home/ubuntu/cityhallfe/ &&
-        sudo docker-compose up -d"
+        docker ps -aq | xargs docker stop | xargs docker rm &&
+        docker run -d -p 80:80 city-hall-fe"
