@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 build_procedure:
   stage: build
@@ -8,3 +9,12 @@ build_procedure:
     - docker:20.10.16-dind
   script:
     - docker compose build
+
+deploy_procedure:
+  stage: deploy
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
+        docker ps -aq | xargs docker stop | xargs docker rm &&
+        docker compose up"
