@@ -22,5 +22,7 @@ deploy_procedure:
     - chmod 400 $SSH_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
-        sudo docker ps -aq | sudo xargs docker stop | sudo xargs docker rm &&
-        sudo docker run -d -p 80:80 city-hall-fe"
+        docker stop city-hall-fe &&
+        docker rm city-hall-fe &&
+        cd /home/ubuntu/cityhallfe/ &&
+        docker compose up -d"
