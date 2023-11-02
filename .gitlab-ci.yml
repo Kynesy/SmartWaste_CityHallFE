@@ -22,6 +22,8 @@ deploy_procedure:
     - chmod 400 $SSH_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
+        rm -fr /home/ubuntu/cityhallfe/ &&
+        git clone https://gitlab.com/pas_smartcitywastemanagement/cityhallfe.git &&
         sudo docker stop city-hall-fe &&
         sudo docker rm city-hall-fe &&
         cd /home/ubuntu/cityhallfe/ &&
