@@ -2,14 +2,11 @@
   "name": "city-hall-fe",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "ng": "ng",
     "start": "npx ng serve --host 0.0.0.0 --poll=500",
-    "build": "npx ng build --prod demo",
-    "test": "npx ng test --browsers=ChromeHeadless",
+    "build": "ng build --configuration development",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
     "lint": "npx ng lint",
     "e2e": "npx ng e2e"
   },
