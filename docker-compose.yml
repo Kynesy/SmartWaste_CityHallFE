@@ -9,7 +9,7 @@ services:
     image: city-hall-fe # Replace with the Docker image name you used earlier
     container_name: city-hall-fe # Replace with a suitable container name
     ports:
-      - "80:80" # Map port 4200 of the host to port 4200 of the container
+      - "4200:80" # Map port 4200 of the host to port 4200 of the container
     networks:
       - city-hall-fe
 
