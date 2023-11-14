@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { ToastService } from 'src/app/services/toast.service';
 import Encrypter from 'src/app/utils/encrypter';
 import { SafeUrl } from '@angular/platform-browser';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +14,7 @@ import { SafeUrl } from '@angular/platform-browser';
 
 export class ProfileComponent implements OnInit, OnDestroy {
   show = false;
-  userID: string = "";
+  userID: string | null = "";
   encryptedID: string = "";
   qrCodeDownloadLink: SafeUrl = "";
   
@@ -27,48 +27,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
   };
   isEditMode: any;
   selectedDate: any;
+  role: string | undefined;
 
-  constructor(public encrypter: Encrypter, public authService: AuthService, private userService: UserService, private toastService: ToastService) { }
+  constructor(public encrypter: Encrypter,private storageService: StorageService, private userService: UserService, private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.getUserID();
-  }
-
-  async getUserID() {
-    await this.authService.user$.subscribe(
-      (profile) => {
-        var profileJson = JSON.stringify(profile, null, 2);
-        const profileData = JSON.parse(profileJson || "");
-        const subField = profileData['sub'] || '';
-        const subParts = subField.split('|');
-
-        if (subParts.length === 2 && subParts[0] === 'auth0') {
-          this.userID = subParts[1];
-          this.encryptedID = this.encrypter.encrypt(this.userID);
-          this.loadUser();
-        } else {
-          console.error("Invalid sub field format");
-        }
-      },
-      (error) => {
-        console.error("Error while getting user profile: ", error);
-      }
-    );
+    if(this.storageService.isUserLogged()){
+      this.user.email = this.storageService.getData("email")!;
+      this.role = this.storageService.getData("role")!;
+      this.user.id = this.storageService.getData("id")!;
+    }
   }
 
   loadUser() {
-    this.userService.getUser(this.userID).subscribe(
+    this.userService.getUser(this.user.id).subscribe(
       (user) => {
         this.user = user;
       },
       (error) => {
         console.error("Error loading user: ", error);
       }
-    );
+    );  
   }
 
   updateUser() {
-    this.user.id = this.userID;
     this.updateSelectedDate();
     this.userService.updateUser(this.user).subscribe(
       (response) => {
@@ -84,6 +66,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.error("Error updating user: ", error);
       }
     );
+
   }
 
   onChangeURL(url: SafeUrl) {

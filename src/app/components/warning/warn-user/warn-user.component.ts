@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { Warning } from 'src/app/models/warning';
 import { WarningService } from 'src/app/services/warning.service';
 
@@ -12,7 +11,7 @@ export class WarnUserComponent implements OnInit{
   warningList: Warning[] | undefined;
   userId: string | void | undefined;
 
-  constructor(private warningService: WarningService, private authService: AuthService){}
+  constructor(private warningService: WarningService){}
 
   async ngOnInit(): Promise<void> {
     this.userId = await this.getUserID().catch(error => {
@@ -33,6 +32,7 @@ export class WarnUserComponent implements OnInit{
 
   getUserID(): Promise<string> {
     return new Promise((resolve, reject) => {
+      /*
       this.authService.user$.subscribe(
         (profile: any) => {
           const profileJson = JSON.stringify(profile, null, 2);
@@ -50,6 +50,7 @@ export class WarnUserComponent implements OnInit{
           reject("Error while getting user profile: " + error);
         }
       );
+      */
     });
   }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { FeeStatistics } from 'src/app/models/fee-statistics';
 import { WasteStatistics } from 'src/app/models/waste-statistics';
 import { StatisticsService } from 'src/app/services/statistics.service';
@@ -41,7 +40,7 @@ export class DashboardComponent implements OnInit{
     totalUnsortedWaste: 0
   }
   
-  constructor(private authService: AuthService, private route: ActivatedRoute, private taxService: TaxService, private statisticService: StatisticsService){}
+  constructor(private route: ActivatedRoute, private taxService: TaxService, private statisticService: StatisticsService){}
 
 
   async ngOnInit() {
@@ -112,6 +111,7 @@ export class DashboardComponent implements OnInit{
 
   getUserID(): Promise<string> {
     return new Promise((resolve, reject) => {
+      /*
       this.authService.user$.subscribe(
         (profile: any) => {
           const profileJson = JSON.stringify(profile, null, 2);
@@ -129,6 +129,7 @@ export class DashboardComponent implements OnInit{
           reject("Error while getting user profile: " + error);
         }
       );
+      */
     });
   }
   

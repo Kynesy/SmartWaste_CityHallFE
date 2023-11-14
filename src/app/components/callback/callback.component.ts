@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { User } from 'src/app/models/user';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -12,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CallbackComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService, private storageService: StorageService) { }
+  constructor(private router: Router, private userService: UserService, private storageService: StorageService) { }
   user: User = {
     id: '',
     name: '',
@@ -25,28 +24,7 @@ export class CallbackComponent implements OnInit {
 
   ngOnInit(): void {
     this.storageService.clearData();
-    this.authService.idTokenClaims$.subscribe(
-      (token) => {
-        if(token && token['__raw']){
-          this.storageService.saveData("token", token['__raw']);
-        }
-      },
-      (error) => {
-        console.error("TOKEN NOT SAVED IN STORAGE SESSION: ", error);
-      }
-    )
     //ottieni l'access token
-    this.authService.user$.subscribe(
-      (profile) => {
-        this.profileJson = JSON.stringify(profile, null, 2);
-        console.log(this.profileJson);
-        this.createUserData(); //riempi la classe user
-        this.userExist();
-      },
-      (error) => {
-        console.error("Error while getting user profile: ", error);
-      }
-    );
 
     // Redirect to home
     this.router.navigate(['/']);

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthModule } from '@auth0/auth0-angular';
 import { MyAuthGuard } from './security/my-auth-guard.guard';
 import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgChartsModule } from 'ng2-charts';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,15 +13,12 @@ import { HomeComponent } from './components/home/home.component';
 import { SidebarComponent } from './components/sidebars/sidebar/sidebar.component';
 import { AdminMenuComponent } from './components/sidebars/admin-menu/admin-menu.component';
 import { UserMenuComponent } from './components/sidebars/user-menu/user-menu.component';
-import { LoginButtonComponent } from './components/auth/login-button/login-button.component';
 
-import { LogoutButtonComponent } from './components/auth/logout-button/logout-button.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component'; // Instead of importing { clientId } from './path/to/module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { TaxComponent } from './components/tax/tax.component';
-import { NotAuthorizedComponent } from './components/auth/not-authorized/not-authorized.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
@@ -35,6 +30,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { WarnMainComponent } from './components/warning/warn-main/warn-main.component';
 import { WarnUserComponent } from './components/warning/warn-user/warn-user.component';
 import { WarnAdminComponent } from './components/warning/warn-admin/warn-admin.component';
+import { AuthComponent } from './components/auth/auth.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,12 +38,9 @@ import { WarnAdminComponent } from './components/warning/warn-admin/warn-admin.c
     SidebarComponent,
     AdminMenuComponent,
     UserMenuComponent,
-    LoginButtonComponent,
-    LogoutButtonComponent,
     ProfileComponent,
     NavbarComponent,
     TaxComponent,
-    NotAuthorizedComponent,
     DashboardComponent,
     LoadingComponent,
     ContactsComponent,
@@ -58,6 +51,7 @@ import { WarnAdminComponent } from './components/warning/warn-admin/warn-admin.c
     WarnMainComponent,
     WarnUserComponent,
     WarnAdminComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,14 +61,7 @@ import { WarnAdminComponent } from './components/warning/warn-admin/warn-admin.c
     NgChartsModule,
     HttpClientModule,
     QRCodeModule,
-    ScrollingModule,
-    AuthModule.forRoot({
-      domain: "smart-city-waste-management.eu.auth0.com",
-      clientId: "LAHwz0bzECZDGI2bAzfzxgrK0LGen4AN",
-      authorizationParams: {
-        redirect_uri: window.location.origin + '/callback'
-      }
-    }),
+    ScrollingModule
   ],
   providers: [
     MyAuthGuard,

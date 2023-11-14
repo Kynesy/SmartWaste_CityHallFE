@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
 import { Fee } from 'src/app/models/fee';
 import { TaxService } from 'src/app/services/tax.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -16,7 +15,7 @@ export class PaymentsComponent implements OnInit {
   userRole: string | undefined;
   userId: string | void | undefined;
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private taxService: TaxService, private toastService: ToastService) {}
+  constructor(private route: ActivatedRoute, private taxService: TaxService, private toastService: ToastService) {}
 
   async ngOnInit(): Promise<void> {
 
@@ -61,6 +60,7 @@ export class PaymentsComponent implements OnInit {
 
   getUserID(): Promise<string> {
     return new Promise((resolve, reject) => {
+      /*
       this.authService.user$.subscribe(
         (profile: any) => {
           const profileJson = JSON.stringify(profile, null, 2);
@@ -78,6 +78,7 @@ export class PaymentsComponent implements OnInit {
           reject("Error while getting user profile: " + error);
         }
       );
+      */
     });
   }
 

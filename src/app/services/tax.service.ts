@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { Fee } from '../models/fee';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
@@ -16,7 +15,7 @@ export class TaxService {
   authToken: string | null = null
   baseUrl: string = "http://localhost:8082/api/fee";
 
-  constructor(private authService: AuthService, private httpClient: HttpClient, private storageService: StorageService) {
+  constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }
 
   httpOptions = {

@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
 import { WasteStatistics } from '../models/waste-statistics';
 import { StorageService } from './storage.service';

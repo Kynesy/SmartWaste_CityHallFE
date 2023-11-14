@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { Observable, catchError, map, of } from 'rxjs';
 import { User } from '../models/user';
 import { StorageService } from './storage.service';
@@ -12,7 +11,7 @@ export class UserService {
   authToken: string | null = null
   userURL: string = "http://localhost:8080/api/user/";
 
-  constructor(private authService: AuthService, private httpClient: HttpClient, private storageService: StorageService) {
+  constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }
 
   httpOptions = {
@@ -30,7 +29,6 @@ export class UserService {
       this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.authToken);
     }
     
-
     return this.httpClient.get(existUrl, this.httpOptions).pipe(
       map(() => true),
       catchError(() => {
