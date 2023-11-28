@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthResponse } from 'src/app/models/auth-response';
+import { LogInResponse } from 'src/app/models/log-in-response';
+import { SignUpResponse } from 'src/app/models/sign-up-response';
+import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-auth',
@@ -10,24 +13,46 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
+  showLogIn: boolean | undefined = true;
+  showSignUp: boolean | undefined;
+  username: string = '';
   email: string = '';
   password: string = '';
   role='USER';
   showPassword: boolean = false;
 
-  constructor(private authService: AuthService, private storageService: StorageService, private router: Router){}
+  constructor(private authService: AuthService, private storageService: StorageService, private userService: UserService, private router: Router){}
 
-  async signIn() {
+  async signUp() {
     if (this.isValidForm()) {
       try {
-        const response = await this.authService.signIn(this.email, this.password, this.role).toPromise();
+        const response = await this.authService.signUp(this.username, this.email, this.password, this.role).toPromise();
         if (response) {
-          const authResponse: AuthResponse = response as AuthResponse;
-          console.log('Sign In Successful:', authResponse);
-          this.storageService.logInUser(authResponse);
-          this.router.navigate(['/', 'home']);
+          const signUpResponse: SignUpResponse = response as SignUpResponse;
+          console.log(signUpResponse.message +": " +signUpResponse.id);
+          const user: User ={
+            id: signUpResponse.id,
+            username: this.username,
+            email: this.email,
+            role: this.role,
+            name: '',
+            surname: '',
+            bdate: ''
+          };
+
+          this.userService.createUser(user).subscribe(
+            () => {
+              console.log("User created successfully");
+            },
+            (error) => {
+              console.error("Error creating user: ", error);
+            }
+          );
+
+          this.logIn();
+
         } else {
-          console.error('Sign-in response is undefined');
+          console.error('Sign-up response is undefined');
           this.storageService.logOutUser();
         }
       } catch (error) {
@@ -43,11 +68,11 @@ export class AuthComponent {
   async logIn() {
     if (this.isValidForm()) {
       try {
-        const response = await this.authService.logIn(this.email, this.password).toPromise();
+        const response = await this.authService.logIn(this.username, this.password).toPromise();
         if (response) {
-          const authResponse: AuthResponse = response as AuthResponse;
-          console.log('Log In Successful:', authResponse);
-          this.storageService.logInUser(authResponse);
+          const logInResponse: LogInResponse = response as LogInResponse;
+          console.log('Log In Successful:', logInResponse);
+          this.storageService.logInUser(logInResponse);
           this.router.navigate(['/', 'home']);
         } else {
           console.error('Log In response is undefined');
@@ -63,8 +88,19 @@ export class AuthComponent {
 
   }
 
+  createUser(user: User){
+    this.userService.createUser(user);
+  }
+
   isValidForm() {
-    return this.email && this.password;
+    console.log(this.username);
+    console.log(this.email);
+    console.log(this.password);
+    if(this.showLogIn){
+      return this.username && this.password;
+    }else{
+      return this.username && this.email && this.password;
+    }
   }
 
   togglePasswordVisibility() {

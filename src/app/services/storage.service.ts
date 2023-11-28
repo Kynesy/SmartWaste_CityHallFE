@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthResponse } from '../models/auth-response';
-
+import { LogInResponse } from '../models/log-in-response';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,11 +11,12 @@ export class StorageService {
     return false;
   }
 
-  public logInUser(authResponse: AuthResponse){
-    sessionStorage.setItem("email", authResponse.email);
-    sessionStorage.setItem("role", authResponse.role);
-    sessionStorage.setItem("id", authResponse.id);
-    sessionStorage.setItem("token", authResponse.token);
+  public logInUser(logInResponse: LogInResponse){
+    sessionStorage.setItem("username", logInResponse.username);
+    sessionStorage.setItem("email", logInResponse.email);
+    sessionStorage.setItem("role", logInResponse.role);
+    sessionStorage.setItem("id", logInResponse.id);
+    sessionStorage.setItem("token", logInResponse.token);
     sessionStorage.setItem("logged", "true");
   }
 

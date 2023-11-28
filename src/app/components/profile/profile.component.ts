@@ -23,7 +23,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     name: "",
     surname: "",
     email: "",
-    bdate: ""
+    bdate: "",
+    username: '',
+    role: ''
   };
   isEditMode: any;
   selectedDate: any;
@@ -36,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.user.email = this.storageService.getData("email")!;
       this.role = this.storageService.getData("role")!;
       this.user.id = this.storageService.getData("id")!;
+      this.user.username = this.storageService.getData("username")!;
     }
   }
 

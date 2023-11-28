@@ -23,7 +23,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { PaymentsComponent } from './components/payments/payments.component';
-import { CallbackComponent } from './components/callback/callback.component';
 import { ToastComponent } from './components/toast/toast.component';
 import Encrypter from './utils/encrypter';
 import { ChartComponent } from './components/chart/chart.component';
@@ -45,7 +44,6 @@ import { AuthComponent } from './components/auth/auth.component';
     LoadingComponent,
     ContactsComponent,
     PaymentsComponent,
-    CallbackComponent,
     ToastComponent,
     ChartComponent,
     WarnMainComponent,

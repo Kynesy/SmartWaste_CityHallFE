@@ -8,12 +8,11 @@ import { MyAuthGuard } from './security/my-auth-guard.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { PaymentsComponent } from './components/payments/payments.component';
-import { CallbackComponent } from './components/callback/callback.component';
 import { WarnMainComponent } from './components/warning/warn-main/warn-main.component';
 import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: 'auth', component: AuthComponent},
 
   {path: 'home', component: HomeComponent},
@@ -28,8 +27,6 @@ const routes: Routes = [
   {path: 'user/dashboard', component: DashboardComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'USER' }},
   {path: 'user/payments', component: PaymentsComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'USER' }},
   {path: 'user/warning', component: WarnMainComponent, canActivate: [MyAuthGuard], data: { requiredRole: 'USER' }},
-
-  {path: 'callback', component: CallbackComponent, canActivate: [MyAuthGuard]},
 ];
 
 @NgModule({

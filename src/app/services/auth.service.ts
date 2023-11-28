@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Observable, catchError } from 'rxjs';
-import { AuthResponse } from '../models/auth-response';
+import { SignUpResponse } from '../models/sign-up-response';
+import { LogInResponse } from '../models/log-in-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  authURL: string = "http://localhost:8083/api/user/";
+  authURL: string = "http://localhost:8083/api/auth";
   applicationId: string = "O1fwrQULUYhvrKil6GhR3PV0X9Np3cT/2VgKMUvq8PFjRC0rNJJxIR8WYS/1tkuc";
 
   httpOptions = {
@@ -19,15 +20,15 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) { }
 
-  signIn(email: string, password: string, role: string): Observable<AuthResponse>{
-    const signInUrl = this.authURL + 'create';
+  signUp(username: string, email: string, password: string, role: string): Observable<SignUpResponse>{
+    const signUpUrl = this.authURL + '/signup';
     const body = {
       "email": email,
       "password": password,
-      "applicationId": this.applicationId,
+      "username": username,
       "role": role
     }
-    return this.httpClient.post<AuthResponse>(signInUrl, body, this.httpOptions)
+    return this.httpClient.post<SignUpResponse>(signUpUrl, body, this.httpOptions)
       .pipe(
         catchError((error: any) => {
           console.error('An error occurred:', error);
@@ -36,14 +37,13 @@ export class AuthService {
       );
   }
 
-  logIn(email: string, password: string): Observable<AuthResponse>{
-    const logInUrl = this.authURL + 'login';
+  logIn(username: string, password: string): Observable<LogInResponse>{
+    const logInUrl = this.authURL + '/signin';
     const body = {
-      "email": email,
-      "password": password,
-      "applicationId": this.applicationId,
+      "username": username,
+      "password": password
     }
-    return this.httpClient.post<AuthResponse>(logInUrl, body, this.httpOptions)
+    return this.httpClient.post<LogInResponse>(logInUrl, body, this.httpOptions)
       .pipe(
         catchError((error: any) => {
           console.error('An error occurred:', error);
@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   deleteUser(token: string): Observable<String>{
-    const deleteUrl = this.authURL + 'delete/' + token;
+    const deleteUrl = this.authURL + '/delete/' + token;
     
     return this.httpClient.delete<String>(deleteUrl, this.httpOptions)
       .pipe(
