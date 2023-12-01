@@ -14,9 +14,15 @@ export class StorageService {
   public logInUser(logInResponse: LogInResponse){
     sessionStorage.setItem("username", logInResponse.username);
     sessionStorage.setItem("email", logInResponse.email);
-    sessionStorage.setItem("role", logInResponse.role);
     sessionStorage.setItem("id", logInResponse.id);
     sessionStorage.setItem("token", logInResponse.token);
+
+    const roleParts = logInResponse.role.split('_'); // Split the role string
+    if (roleParts.length === 2) {
+      const extractedRole = roleParts[1]; // Get the part after the underscore
+      sessionStorage.setItem("role", extractedRole); // Store it in sessionStorage
+    }
+
     sessionStorage.setItem("logged", "true");
   }
 

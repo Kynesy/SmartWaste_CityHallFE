@@ -14,6 +14,12 @@ export class MyAuthGuard implements CanActivate {
     const isLogged: boolean = this.storageService.isUserLogged();
     const requiredRole: string | undefined = route.data["requiredRole"];
 
+    if(!requiredRole){
+      if(isLogged){
+        return true;
+      }
+    }
+
     if (isLogged && requiredRole) {
       const userRole: string | null = this.storageService.getData("role"); // Assuming you have a method to fetch the user's role
       if (userRole && userRole === requiredRole) {

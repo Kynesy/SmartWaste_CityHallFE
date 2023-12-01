@@ -44,9 +44,11 @@ export class UserService {
     if (this.authToken) {
       this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.authToken);
     }
-    
+
+    console.log("CREATE") 
     console.log(this.httpOptions);
     console.log(user);
+    console.log("-------------")
 
     return this.httpClient.post(createUrl, user, this.httpOptions);
   }

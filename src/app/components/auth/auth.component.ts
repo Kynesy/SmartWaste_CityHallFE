@@ -29,7 +29,6 @@ export class AuthComponent {
         const response = await this.authService.signUp(this.username, this.email, this.password, this.role).toPromise();
         if (response) {
           const signUpResponse: SignUpResponse = response as SignUpResponse;
-          console.log(signUpResponse.message +": " +signUpResponse.id);
           const user: User ={
             id: signUpResponse.id,
             username: this.username,
@@ -40,6 +39,8 @@ export class AuthComponent {
             bdate: ''
           };
 
+          await this.logIn();
+
           this.userService.createUser(user).subscribe(
             () => {
               console.log("User created successfully");
@@ -48,8 +49,6 @@ export class AuthComponent {
               console.error("Error creating user: ", error);
             }
           );
-
-          this.logIn();
 
         } else {
           console.error('Sign-up response is undefined');
@@ -93,9 +92,6 @@ export class AuthComponent {
   }
 
   isValidForm() {
-    console.log(this.username);
-    console.log(this.email);
-    console.log(this.password);
     if(this.showLogIn){
       return this.username && this.password;
     }else{

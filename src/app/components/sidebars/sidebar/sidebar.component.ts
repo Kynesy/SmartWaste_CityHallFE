@@ -9,15 +9,12 @@ import { StorageService } from 'src/app/services/storage.service';
 export class SidebarComponent{
   constructor(private storageService: StorageService) {}
   
-  email: string | null = null;
+  username: string | null = null;
   role: string | null = null;
 
   isUserLogged(){
     this.role = this.storageService.getData("role");
-    const userEmail = this.storageService.getData('email');
-    if (userEmail) {
-      this.email = userEmail.split('@')[0]; // Get the first part of the email before '@'
-    }
+    this.username = this.storageService.getData('username');
     return this.storageService.isUserLogged();
   }
 }

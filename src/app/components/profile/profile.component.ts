@@ -35,17 +35,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.storageService.isUserLogged()){
+      this.user.username = this.storageService.getData("username")!;
       this.user.email = this.storageService.getData("email")!;
       this.role = this.storageService.getData("role")!;
-      this.user.id = this.storageService.getData("id")!;
-      this.user.username = this.storageService.getData("username")!;
+      this.userID = this.storageService.getData("id")!;
+      this.user.id = this.userID!;
+      this.loadUser();
     }
   }
 
   loadUser() {
     this.userService.getUser(this.user.id).subscribe(
-      (user) => {
-        this.user = user;
+      (userData) => {
+        this.user.bdate = userData.bdate;
+        this.user.surname = userData.surname;
+        this.user.name = userData.name;
       },
       (error) => {
         console.error("Error loading user: ", error);
