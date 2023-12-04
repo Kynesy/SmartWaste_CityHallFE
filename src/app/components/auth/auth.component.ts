@@ -5,6 +5,7 @@ import { SignUpResponse } from 'src/app/models/sign-up-response';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class AuthComponent {
   role='USER';
   showPassword: boolean = false;
 
-  constructor(private authService: AuthService, private storageService: StorageService, private userService: UserService, private router: Router){}
+  constructor(private toastService: ToastService, private authService: AuthService, private storageService: StorageService, private userService: UserService, private router: Router){}
 
   async signUp() {
     if (this.isValidForm()) {
@@ -47,19 +48,23 @@ export class AuthComponent {
             },
             (error) => {
               console.error("Error creating user: ", error);
+              this.toastService.showErrorToast("Sign Up Error");
             }
           );
 
         } else {
           console.error('Sign-up response is undefined');
+          this.toastService.showErrorToast("Sign Up Error");
           this.storageService.logOutUser();
         }
-      } catch (error) {
+      } catch (error:any) {
         console.error('Error occurred during sign in:', error);
+        this.toastService.showErrorToast(error.error['message']);
         this.storageService.logOutUser();
       }
     } else {
       console.log('Form is invalid');
+      this.toastService.showErrorToast("Errore: Campi non compilati");
     }
   }
   
@@ -70,18 +75,23 @@ export class AuthComponent {
         const response = await this.authService.logIn(this.username, this.password).toPromise();
         if (response) {
           const logInResponse: LogInResponse = response as LogInResponse;
-          console.log('Log In Successful:', logInResponse);
+          console.log('Log In Successful');
+          this.toastService.showSuccessToast('Log In Successful');
+
           this.storageService.logInUser(logInResponse);
           this.router.navigate(['/', 'home']);
         } else {
           console.error('Log In response is undefined');
+          this.toastService.showErrorToast("Log in Error");
           this.storageService.logOutUser();
         }
-      } catch (error) {
+      } catch (error:any) {
         console.error('Error occurred during Log In:', error);
+        this.toastService.showErrorToast(error.error['message']);
         this.storageService.logOutUser();
       }
     } else {
+      this.toastService.showErrorToast("Log in Error");
       console.log('Form is invalid');
     }
 

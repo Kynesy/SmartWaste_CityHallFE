@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.role = this.storageService.getData("role")!;
       this.userID = this.storageService.getData("id")!;
       this.user.id = this.userID!;
+      this.encryptedID = this.encrypter.encrypt(this.userID);
       this.loadUser();
     }
   }
@@ -73,7 +74,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.error("Error updating user: ", error);
       }
     );
-
   }
 
   onChangeURL(url: SafeUrl) {

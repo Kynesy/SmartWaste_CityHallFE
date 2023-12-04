@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FeeStatistics } from 'src/app/models/fee-statistics';
 import { WasteStatistics } from 'src/app/models/waste-statistics';
 import { StatisticsService } from 'src/app/services/statistics.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { TaxService } from 'src/app/services/tax.service';
 
 @Component({
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnInit{
     totalUnsortedWaste: 0
   }
   
-  constructor(private route: ActivatedRoute, private taxService: TaxService, private statisticService: StatisticsService){}
+  constructor(private storageService: StorageService, private route: ActivatedRoute, private taxService: TaxService, private statisticService: StatisticsService){}
 
 
   async ngOnInit() {
@@ -51,10 +52,8 @@ export class DashboardComponent implements OnInit{
     }
   
     if (this.userRole == 'USER') {
-      this.userId = await this.getUserID().catch(error => {
-        console.error("Error getting user ID: " + error);
-      });
-      if (this.userId) {
+      if (this.storageService.isUserLogged()) {
+        this.userId = this.storageService.getData("id")!;
         this.getUserData();
       }
     }
@@ -107,30 +106,6 @@ export class DashboardComponent implements OnInit{
         console.error('Error retrieving data:', error);
       }
     );
-  }
-
-  getUserID(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      /*
-      this.authService.user$.subscribe(
-        (profile: any) => {
-          const profileJson = JSON.stringify(profile, null, 2);
-          const profileData = JSON.parse(profileJson || "");
-          const subField = profileData['sub'] || '';
-          const subParts = subField.split('|');
-  
-          if (subParts.length === 2 && subParts[0] === 'auth0') {
-            resolve(subParts[1]); // Resolve the Promise with the user ID
-          } else {
-            reject("Invalid sub field format");
-          }
-        },
-        (error: any) => {
-          reject("Error while getting user profile: " + error);
-        }
-      );
-      */
-    });
   }
   
 }

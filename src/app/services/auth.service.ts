@@ -10,7 +10,6 @@ import { LogInResponse } from '../models/log-in-response';
 })
 export class AuthService {
   authURL: string = "http://localhost:8083/api/auth";
-  applicationId: string = "O1fwrQULUYhvrKil6GhR3PV0X9Np3cT/2VgKMUvq8PFjRC0rNJJxIR8WYS/1tkuc";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -26,7 +25,7 @@ export class AuthService {
       "email": email,
       "password": password,
       "username": username,
-      "role": role
+      "role": role,
     }
     return this.httpClient.post<SignUpResponse>(signUpUrl, body, this.httpOptions)
       .pipe(
@@ -41,7 +40,7 @@ export class AuthService {
     const logInUrl = this.authURL + '/signin';
     const body = {
       "username": username,
-      "password": password
+      "password": password,
     }
     return this.httpClient.post<LogInResponse>(logInUrl, body, this.httpOptions)
       .pipe(

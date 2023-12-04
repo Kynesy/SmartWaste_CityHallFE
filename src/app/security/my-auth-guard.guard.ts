@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable, switchMap } from "rxjs";
 import { StorageService } from "../services/storage.service";
 
 @Injectable({
