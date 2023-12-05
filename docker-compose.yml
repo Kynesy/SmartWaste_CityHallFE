@@ -8,7 +8,7 @@ services:
     image: city-hall-fe # Replace with the Docker image name you used earlier
     container_name: city-hall-fe # Replace with a suitable container name
     ports:
-      - "4200:80"
+      - "80:80"
     networks:
       - city-hall-fe
 
