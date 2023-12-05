@@ -25,6 +25,6 @@ deploy_procedure:
         rm -fr /home/ubuntu/cityhallfe/ &&
         git clone https://gitlab.com/pas_smartcitywastemanagement/cityhallfe.git &&
         sudo docker stop city-hall-fe &&
-        sudo docker rm city-hall-fe &&
+        sudo docker image rm city-hall-fe &&
         cd /home/ubuntu/cityhallfe/ &&
         sudo docker compose up -d"
