@@ -23,8 +23,8 @@ deploy_procedure:
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
         cd /home/ubuntu/cityhallfe/ &&
-        git pull origin master && # Update the repository
-        sudo docker-compose down && # Stop the container if running
-        sudo docker-compose build && # Build a new Docker image
-        sudo docker-compose up -d" # Run Docker Compose in detached mode
+        git pull origin master &&
+        sudo docker-compose down &&
+        sudo docker-compose build &&
+        sudo docker-compose up -d"
 
