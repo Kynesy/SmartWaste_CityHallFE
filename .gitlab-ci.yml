@@ -22,9 +22,9 @@ deploy_procedure:
     - chmod 400 $SSH_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SSH_IP "
-        rm -fr /home/ubuntu/cityhallfe/ &&
-        git clone https://gitlab.com/pas_smartcitywastemanagement/cityhallfe.git &&
-        sudo docker stop city-hall-fe &&
-        sudo docker image rm -f city-hall-fe &&
         cd /home/ubuntu/cityhallfe/ &&
-        sudo docker compose up -d"
+        git pull origin master && # Update the repository
+        sudo docker-compose down && # Stop the container if running
+        sudo docker-compose build && # Build a new Docker image
+        sudo docker-compose up -d" # Run Docker Compose in detached mode
+
