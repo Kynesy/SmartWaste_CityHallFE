@@ -4,7 +4,6 @@ services:
   # Angular app service
   angular-app:
     build:
-      context: .
       dockerfile: Dockerfile
     image: city-hall-fe # Replace with the Docker image name you used earlier
     container_name: city-hall-fe # Replace with a suitable container name
