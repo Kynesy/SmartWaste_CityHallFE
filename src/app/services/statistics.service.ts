@@ -5,13 +5,15 @@ import { WasteStatistics } from '../models/waste-statistics';
 import { StorageService } from './storage.service';
 import { FeeStatistics } from '../models/fee-statistics';
 
+import {default as BackendURL} from 'BackendURL.json';
+
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticsService {
   authToken: string | null = null
-  trashUrl: string = "http://localhost:8081/api/trash";
-  feeUrl: string = "http://localhost:8082/api/stats";
+  trashUrl: string = BackendURL.WasteDIsposalAgencyBE + "/api/trash";
+  feeUrl: string = BackendURL.TaxBE + "/api/stats";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }

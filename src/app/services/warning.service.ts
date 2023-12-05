@@ -4,12 +4,14 @@ import { StorageService } from './storage.service';
 import { Warning } from '../models/warning';
 import { Observable } from 'rxjs';
 
+import {default as BackendURL} from 'BackendURL.json';
+
 @Injectable({
   providedIn: 'root'
 })
 export class WarningService {
   authToken: string | null = null
-  userURL: string = "http://localhost:8080/api/warning";
+  userURL: string = BackendURL.CityHallBE + "/api/warning";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }

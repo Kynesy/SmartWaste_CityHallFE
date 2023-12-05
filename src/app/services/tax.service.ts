@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { WasteStatistics } from '../models/waste-statistics';
 
+import {default as BackendURL} from 'BackendURL.json';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,7 @@ export class TaxService {
     throw new Error('Method not implemented.');
   }
   authToken: string | null = null
-  baseUrl: string = "http://localhost:8082/api/fee";
+  baseUrl: string =  BackendURL.TaxBE + "/api/fee";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }
