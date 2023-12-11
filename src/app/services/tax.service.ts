@@ -15,7 +15,7 @@ export class TaxService {
     throw new Error('Method not implemented.');
   }
   authToken: string | null = null
-  baseUrl: string =  BackendURL.TaxBE + "/api/fee";
+  baseUrl: string =  BackendURL.TaxBE + "/fee";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }

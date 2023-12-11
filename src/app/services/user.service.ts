@@ -11,7 +11,7 @@ import {default as BackendURL} from 'BackendURL.json';
 })
 export class UserService {
   authToken: string | null = null
-  userURL: string = BackendURL.CityHallBE + "/api/user/";
+  userURL: string = BackendURL.CityHallBE + "/user/";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }

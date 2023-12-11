@@ -12,8 +12,8 @@ import {default as BackendURL} from 'BackendURL.json';
 })
 export class StatisticsService {
   authToken: string | null = null
-  trashUrl: string = BackendURL.WasteDIsposalAgencyBE + "/api/trash";
-  feeUrl: string = BackendURL.TaxBE + "/api/stats";
+  trashUrl: string = BackendURL.WasteDIsposalAgencyBE + "/trash";
+  feeUrl: string = BackendURL.TaxBE + "/stats";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }

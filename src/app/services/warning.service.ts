@@ -11,7 +11,7 @@ import {default as BackendURL} from 'BackendURL.json';
 })
 export class WarningService {
   authToken: string | null = null
-  userURL: string = BackendURL.CityHallBE + "/api/warning";
+  userURL: string = BackendURL.CityHallBE + "/warning";
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
   }
