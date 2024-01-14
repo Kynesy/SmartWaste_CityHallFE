@@ -59,7 +59,7 @@ export class AuthComponent {
         }
       } catch (error:any) {
         console.error('Error occurred during sign up');
-        this.toastService.showErrorToast(error.error['message']);
+        this.toastService.showErrorToast('Error occurred during sign up');
         this.storageService.logOutUser();
       }
     } else {
