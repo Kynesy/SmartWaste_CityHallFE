@@ -85,9 +85,9 @@ export class AuthComponent {
           this.toastService.showErrorToast("Log in Error");
           this.storageService.logOutUser();
         }
-      } catch (error:any) {
+      } catch (error) {
         console.error('Error occurred during Log In');
-        this.toastService.showErrorToast(error.error['message']);
+        this.toastService.showErrorToast("Log in Error");
         this.storageService.logOutUser();
       }
     } else {
